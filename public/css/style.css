@@ -1,0 +1,147 @@
+/* Navbar Styling */
+.navbar {
+    height: 5rem;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.fa-compass {
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+.nav-link {
+    color: #222222 !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+    color: #fe424d !important;
+}
+
+/* Footer Styling */
+.f-info {
+    text-align: center;
+    height: auto;
+    padding: 2rem 0;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.f-info-links {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+    margin: 0 1rem;
+    font-weight: 500;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+    color: #fe424d;
+}
+
+.f-info-socials {
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+.f-info-socials i {
+    margin: 0.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.f-info-socials i:hover {
+    color: #fe424d;
+}
+
+/* Card Styling */
+.listing-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.listing-card:hover {
+    transform: translateY(-5px);
+}
+
+.listing-card img {
+    border-radius: 1rem 1rem 0 0;
+    object-fit: cover;
+    height: 20rem;
+}
+
+.listing-card .card-body {
+    padding: 1.5rem;
+}
+
+.listing-card .card-title {
+    font-weight: 500;
+    color: #222222;
+    margin-bottom: 0.5rem;
+}
+
+.listing-card .listing-price {
+    font-weight: 600;
+    color: #fe424d;
+    font-size: 1.25rem;
+}
+
+.listing-card .listing-location {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #fe424d !important;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #e63946 !important;
+}
+
+/* Container */
+.container {
+    padding: 2rem 1rem;
+}
+
+/* Show page */
+.show-listing {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.show-listing img {
+    border-radius: 1rem;
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.listing-description {
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 1.5rem 0;
+}
