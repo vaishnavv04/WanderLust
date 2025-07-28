@@ -1,17 +1,44 @@
 <% layout("/layouts/boilerplate") %>
-<body>
-    <h3>ALL listings</h3>
-    <!-- <form method="GET" action="/listings/new">
-        <button> Create New Listing</button>
-    </form> -->
-    <ul>
+
+<div class="row mt-4 mb-2">
+    <div class="col-12">
+        <h1 class="listing-heading">Places to stay</h1>
+    </div>
+</div>
+
+<div class="listings-container row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4">
     <% for(let listing of allListings){ %>
-        <li>
-            <a href='/listings/<%=listing._id%>'>
-                <%= listing.title%> 
-            </a>
-        </li>
+    <div class="col">
+        <a href="/listings/<%=listing._id%>" class="listing-link">
+            <div class="card listing-card">
+                <div class="card-img-wrap">
+                    <img src="<%= listing.image.url %>" class="card-img listing-img" alt="<%= listing.title %>">
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <h5 class="card-title listing-title text-truncate"><%= listing.title %></h5>
+                            <p class="listing-location text-truncate mb-1">
+                                <%= listing.location %>, <%= listing.country %>
+                            </p>
+                        </div>
+                        <div class="rating-badge ms-2">
+                            <i class="fa-solid fa-star"></i> 4.8
+                        </div>
+                    </div>
+                    <p class="listing-price">
+                        <span class="fw-bold">₹1,200</span> / night
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
     <% } %>
-    </ul>
-</body>
+</div>
+
+<div class="floating-button">
+    <a href="/listings/new" class="btn rounded-pill px-4 py-3">
+        <i class="fa-solid fa-plus me-2"></i>Add your place
+    </a>
+</div>
 

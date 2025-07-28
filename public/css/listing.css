@@ -1,0 +1,143 @@
+/* Listing Page Styles */
+.listing-heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000000 !important;
+    margin: 2rem 0;
+}
+
+.listing-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.listing-link:hover {
+    color: inherit;
+}
+
+.listing-card {
+    background: transparent;
+    border: none;
+}
+
+.card-img-wrap {
+    aspect-ratio: 1 / 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    margin-bottom: 0.75rem;
+    transition: transform 0.3s ease;
+}
+
+.listing-card:hover .card-img-wrap {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.listing-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.listing-card:hover .listing-img {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: 0.25rem 0;
+}
+
+.listing-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222222;
+    margin-bottom: 0.25rem;
+}
+
+.listing-location {
+    color: #717171;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.listing-price {
+    color: #222222;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.rating-badge {
+    font-size: 0.9rem;
+    color: #222222;
+    font-weight: 500;
+}
+
+.rating-badge i {
+    font-size: 0.8rem;
+    margin-right: 0.2rem;
+    color: #ff385c;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.floating-button:hover {
+    transform: translateX(-50%) scale(1.03);
+}
+
+.floating-button .btn {
+    font-size: 1rem;
+    font-weight: 600;
+    background: #222222;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .listing-heading {
+        font-size: 2rem;
+    }
+    
+    .floating-button {
+        width: auto;
+    }
+    
+    .floating-button .btn {
+        padding: 0.8rem 1.5rem;
+    }
+}
+
+/* Dark mode support */
+body.dark-mode .listing-heading {
+    color: #e8e8e8 !important;
+}
+
+body.dark-mode .listing-title,
+body.dark-mode .listing-price,
+body.dark-mode .rating-badge {
+    color: #e8e8e8;
+}
+
+body.dark-mode .listing-location {
+    color: #a1a1a1;
+}
+
+body.dark-mode .floating-button .btn {
+    background: #ffffff;
+    color: #222222;
+}
+
+body.dark-mode .card-img-wrap:hover {
+    box-shadow: 0 8px 16px rgba(255,255,255,0.1);
+}
