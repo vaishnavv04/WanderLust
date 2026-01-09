@@ -1,61 +1,137 @@
 <% layout("/layouts/boilerplate") %>
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-12">
-            <h2 class="mb-4 fw-bold text-center">Listing Details</h2>
-            
-            <div class="row">
-                <div class="col-lg-8 col-md-12 mb-4">
-                    <div class="card border-0 shadow-sm">
-                        <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="<%= listing.title %>">
-                    </div>
-                </div>
-                
-                <div class="col-lg-4 col-md-12">
-                    <div class="card border-0 shadow-sm listing-show-card h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title fw-bold mb-3"><%= listing.title %></h3>
-                            <p class="card-text text-muted mb-4"><%= listing.description %></p>
-                            
-                            <div class="listing-details">
-                                <div class="detail-item mb-3">
-                                    <span class="fw-semibold text-success">Price:</span>
-                                    <span class="fs-5 fw-bold">₹<%= listing.price.toLocaleString("en-IN") %></span>
-                                    <span class="text-muted">/ night</span>
-                                </div>
-                                
-                                <div class="detail-item mb-3">
-                                    <span class="fw-semibold">Location:</span>
-                                    <span><%= listing.location %></span>
-                                </div>
-                                
-                                <div class="detail-item mb-4">
-                                    <span class="fw-semibold">Country:</span>
-                                    <span><%= listing.country %></span>
-                                </div>
-                            </div>
-                            
-                            <div class="action-buttons">
-                                <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger me-2 mb-2">
-                                    Edit
-                                </a>
-                                <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
-                                    <button class="btn btn-dark mb-2" onclick="return confirm('Are you sure you want to delete this listing?')">
-                                        Delete
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-4">
-                <a href="/listings" class="btn btn-secondary">
-                    <i class="fa-solid fa-arrow-left me-2"></i>Back to All Listings
-                </a>
-            </div>
+<script>
+    let mapToken = "<%=process.env.MAP_TOKEN %>";
+    const listing = "<%-JSON.stringify(listing)%>";
+   
+    
+</script>
+    <div class="row mt-3">
+        <div class="col-8 offset-3">
+            <h3><%= listing.title %></h3>
         </div>
+    
+            <div class="card listing-card col-6 offset-3 show-card">
+                <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing-image">
+                <div class="card-body">
+                    
+                    <p><i>Owned by <%= listing.owner.username %></i></p>
+
+                    <p><%= listing.description %> </p>
+                    <p>&#8377;<%= listing.price.toLocaleString("en-IN") %> </p>
+                    <p><%= listing.location %></p>
+                    <p><%= listing.country %></p>
+
+                  </div>
+            </div>
+           
+        
+            <br>
+            
+        
+    </div>
+
+    <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
+
+    <div class="btns">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-lg-1  offset-3 edit-btn">Edit</a>
+    
+
+        <form action="/listings/<%= listing._id %>?_method=DELETE" id="deleteForm" method="post" >
+            <button id="deleteButton" class="btn btn-dark offset-5">Delete</button>
+        </form>
+    </div>
+    <% } %>
+    
+    <% if(currUser){ %>
+        <hr>
+
+    <div class="col-8 offset-3">
+       
+        <h4>Leave a Review</h4>
+
+        <form action="/listings/<%= listing._id %>/reviews" method="post" class="mb-3 needs-validation" novalidate >
+            <div class="mb-3 mt-3">
+                
+            
+                <label class="form-label" for="rating">Rating</label>
+            
+              <fieldset class="starability-slot">
+                <legend>First rating:</legend>
+                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="review[rating]ing" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+              </fieldset>
+            </div>
+            <div class="mb-3 mt-3">
+                <label class="form-label" for="comment" >Comment</label>
+                <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+                <div class="invalid-feedback">Please add some comments for review</div>
+            </div>
+
+            <button class="btn btn-outline-dark">Submit</button>
+        </form>
+
+        <hr>
+
+        <% } %>
+
+
+        <% if(listing.reviews.length){%>
+            <p><b>All Reviews</b></h4>
+                <% } %>
+
+   <div class="row">
+
+    <% for(review of listing.reviews){%>
+        <div class="card col-lg-5 col-md-5 col-12 ms-3 mb-3">
+            <div class="card-body mb-3">
+                <h5 class="card-title">@<%= review.author.username %></h5>
+                <p class="card-text"><%= review.comment %></p>
+                <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+            </div>
+
+            <form action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE" method="post" id="deleteReview" class="mb-3"> 
+                <button class="btn btn-sm btn-dark" id="delR">Delete</button></form>
+        </div>
+        
+        <% } %>
+        
     </div>
 </div>
+
+<div class="col-8 offset-3">
+    <h3>Where you'll be</h3>
+
+    <div id="map">
+
+    </div>
+</div>
+
+<script>
+    document.getElementById('deleteButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteForm').submit();
+            }
+        });
+    });
+</script>
+    
+<script src="/js/map.js"></script>

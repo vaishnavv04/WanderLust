@@ -1,54 +1,95 @@
 <% layout("/layouts/boilerplate") %>
+<body>
 
-<div class="container-fluid">
-    <div class="row justify-content-center mt-4">
-        <div class="col-lg-8 col-md-10 col-sm-12">
-            <h2 class="mb-4 fw-bold">Edit your Listing</h2>
-            
-            <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate>
-                <!-- Title -->
-                <div class="mb-3">
-                    <label for="title" class="form-label fw-semibold">Title</label>
-                    <input type="text" class="form-control form-control-lg" id="title" name="listing[title]" value="<%= listing.title %>" required>
-                </div>
-
-                <!-- Description -->
-                <div class="mb-3">
-                    <label for="description" class="form-label fw-semibold">Description</label>
-                    <textarea class="form-control" id="description" name="listing[description]" rows="4" required><%= listing.description %></textarea>
-                </div>
-
-                <!-- Image URL -->
-                <div class="mb-3">
-                    <label for="image" class="form-label fw-semibold">Image Link</label>
-                    <input type="url" class="form-control" id="image" name="listing[image]" value="<%= listing.image.url %>" required>
-                </div>
-
-                <!-- Price and Country Row -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="price" class="form-label fw-semibold">Price</label>
-                        <input type="number" class="form-control" id="price" name="listing[price]" value="<%= listing.price %>" min="1" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="country" class="form-label fw-semibold">Country</label>
-                        <input type="text" class="form-control" id="country" name="listing[country]" value="<%= listing.country %>" required>
-                    </div>
-                </div>
-
-                <!-- Location -->
-                <div class="mb-4">
-                    <label for="location" class="form-label fw-semibold">Location</label>
-                    <input type="text" class="form-control" id="location" name="listing[location]" value="<%= listing.location %>" required>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="mb-4">
-                    <button type="submit" class="btn btn-danger fw-semibold px-4 py-2">
-                        Edit
-                    </button>
-                </div>
-            </form>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+        <h3>Edit your Listing</h3>
+    <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" class="needs-validation" id="editForm" novalidate enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="listing[title]" value="<%=listing.title %>" class="form-control" required>
+            <div class="valid-feedback">Title looks good!</div>
+                <div class="invalid-feedback">write title here</div>
         </div>
-    </div>
+        <div class="mb-3">
+            <label for="description" class="form-label" >Description</label>
+            <textarea name="listing[description]" id="" class="form-control" required><%=listing.description %></textarea>
+            <div class="invalid-feedback">Please enter short Description</div>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="category"
+              name="listing[category]"
+            >
+              <option selected value="<%= listing.category %>"><%= listing.category %></option>
+              <option value="trending">Trending</option>
+              <option value="rooms">Rooms</option>
+              <option value="iconic citites">Iconic Citites</option>
+              <option value="mountains">Mountains</option>
+              <option value="castles">Castles</option>
+              <option value="amazing pools">Amazing pools</option>
+              <option value="camping">Camping</option>
+              <option value="farms">Farms</option>
+              <option value="arctic">Arctic</option>
+              <option value="domes">Domes</option>
+              <option value="boat">Boat</option>
+            </select>
+          </div>
+        <p>Orignal image</p>
+        <img src="<%=orgImage %>" alt=""> 
+        <div class="mb-3">
+            <label for="image" class="form-label">Image Link</label>
+            <input type="file" name="listing[image]" class="form-control">
+        </div>
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="title" class="form-label">Price</label>
+                <input type="number" name="listing[price]" value="<%=listing.price %>"  class="form-control" required>
+                <div class="invalid-feedback">Price should be valid</div>
+                
+            </div>
+
+            <div class="mb-3 col-md-8">
+                <label for="title" class="form-label">Country</label>
+                <input type="text" name="listing[country]" value="<%=listing.country %>" class="form-control" required>
+                <div class="invalid-feedback">Country name Should be valid</div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" name="listing[location]" value="<%=listing.location %>"  class="form-control" required>
+            <div class="invalid-feedback">Location Should be valid</div>
+        </div>
+        
+        <button class="btn btn-dark mt-3 edit-btn" id="edit">Edit</button>
+        
+    </form>
 </div>
+</div>
+
+   
+    
+</body>
+
+<script>
+    document.getElementById('edit').addEventListener('click', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Are you sure',
+            text: "You won't be able to revert changes!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Edit it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('editForm').submit();
+            }
+        });
+    });
+</script>

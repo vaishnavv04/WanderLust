@@ -1,44 +1,166 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-4 mb-2">
-    <div class="col-12">
-        <h1 class="listing-heading">Places to stay</h1>
+    <style>
+      #filters{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .ft{
+        display: flex;
+        align-items: center;
+      }
+      @media (max-width : 1000px) {
+        .ft{
+        display: flex;
+        align-items: center;
+        overflow-x:scroll !important;
+      }
+      .ft::-webkit-scrollbar {
+    display: none;
+}
+      }
+      .filter{
+        text-align: center;
+        margin-right: 2rem;
+        margin-top: 2rem;
+        opacity : 0.7;
+      }
+      .filter:hover{
+        opacity: 1;
+        cursor: pointer;
+      }
+      .filter p{
+        font-size: 0.8rem;
+      }
+      .tax-info{
+        display: none;
+      }
+      .tax-toggle{
+        border: 1px solid black;
+        border-radius: 1rem;
+        height: 3.5rem;
+        padding: 1rem;
+        margin-left: 2rem;
+        display: flex;
+        margin-left: auto;
+        
+      }
+      .filter:hover{
+        color : #fe424d;
+      }
+      .filter:active{
+        color: #fe424d;
+      }
+      </style>
+
+
+    <div id="filters">
+      <div class="ft">
+      <div class="filter" onclick="filterListing(this,'Trending')">
+        <div><i class="fa-solid fa-fire"></i></div>
+        <p>Trending</p>
+      </div>
+      <div class="filter" onclick="filterListing(this,'Rooms')">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <p>Rooms</p>
+      </div>
+      <div class="filter" onclick="filterListing(this,'Iconic Citites')">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p>Iconic Citites</p>
+      </div>
+      <div class="filter" onclick="filterListing(this,'Mountains')">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <p>Mountains</p>
+      </div>
+      <div class="filter" onclick="filterListing(this,'Castles')">
+        <div><i class="fa-brands fa-fort-awesome"></i></div>
+        <p>Castles</p>
+      </div>
+      <div class="filter" onclick="filterListing(this,'Amazing pools')">
+        <div><i class="fa-solid fa-person-swimming"></i></div>
+        <p>Amazing pools</p>
+      </div>
+      <div  class="filter" onclick="filterListing(this,'Camping')">
+        <div><i class="fa-solid fa-campground"></i></div>
+        <p>Camping</p>
+      </div>
+      <div class="filter" onclick="filterListing(this,'Farms')">
+        <div><i class="fa-solid fa-cow"></i></div>
+        <p>Farms</p>
+      </div>
+      <div class="filter" onclick="filterListing(this,'Arctic')">
+        <div><i class="fa-solid fa-snowflake"></i></div>
+        <p>Arctic</p>
+      </div>
+      <div class="filter" onclick="filterListing(this,'Domes')">
+        <div><i class="fa-solid fa-igloo"></i></div>
+        <p>Domes</p>
+      </div>
+      <div class="filter" onclick="filterListing(this,'Boat')">
+        <div><i class="fa-solid fa-ship"></i></div>
+        <p>Boat</p>
+      </div>
     </div>
-</div>
 
-<div class="listings-container row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4">
-    <% for(let listing of allListings){ %>
-    <div class="col">
-        <a href="/listings/<%=listing._id%>" class="listing-link">
-            <div class="card listing-card">
-                <div class="card-img-wrap">
-                    <img src="<%= listing.image.url %>" class="card-img listing-img" alt="<%= listing.title %>">
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="flex-grow-1">
-                            <h5 class="card-title listing-title text-truncate"><%= listing.title %></h5>
-                            <p class="listing-location text-truncate mb-1">
-                                <%= listing.location %>, <%= listing.country %>
-                            </p>
-                        </div>
-                        <div class="rating-badge ms-2">
-                            <i class="fa-solid fa-star"></i> 4.8
-                        </div>
-                    </div>
-                    <p class="listing-price">
-                        <span class="fw-bold">₹1,200</span> / night
-                    </p>
-                </div>
-            </div>
-        </a>
+      
+      <div class="tax-toggle">
+        <div class="form-check-reverse form-switch ">
+          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+          <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+        </div>
+      </div>
+      
     </div>
-    <% } %>
-</div>
 
-<div class="floating-button">
-    <a href="/listings/new" class="btn rounded-pill px-4 py-3">
-        <i class="fa-solid fa-plus me-2"></i>Add your place
-    </a>
-</div>
+    
+    <% if(t){ %>
+      <h4>Listings Related to <%= type %></h4>
+  <% } %>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-2 mt-3">
+    <% for(let listing of allListings) {%>
+<a href="/listings/<%= listing._id %>" class="listing-link">
+    <div class="card listing-card col" >
+        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
 
+        <div class="card-img-overlay"></div>
+
+        <div class="card-body">
+          <p class="card-text"><b><%= listing.title %> </b><br>
+            &#8377;<%= listing.price.toLocaleString("en-IN") %> / night
+            <i class="tax-info">&nbsp;+18% GST</i>
+        </p>
+        </div>
+      </div>
+
+      <% } %>
+    </div>
+</a>
+
+<script>
+  let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+
+  taxSwitch.addEventListener("click",()=>{
+    let taxinfo = document.getElementsByClassName("tax-info");
+
+    for(info of taxinfo){
+      if(info.style.display != "inline"){
+        
+        info.style.display = "inline";
+      }
+      else{
+        info.style.display = "none";
+      }
+    }
+    
+  })
+
+  function filterListing(ele,type){
+
+    type=type.toLowerCase();
+    console.log(type);
+
+    window.location.href = `/listings/?type=${type}`;
+
+  }
+</script>
